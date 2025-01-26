@@ -25,7 +25,7 @@ class CommentAdapter(private val comments: List<Comment>) : RecyclerView.Adapter
         val comment = comments[position]
 
         if(comment.name.length > 10) {
-            holder.tvName.text = comment.name.replaceFirstChar { it.toUpperCase() }.substring(0, 12)
+            holder.tvName.text = comment.name.replaceFirstChar { it.toUpperCase() }.substring(0, 10)
         }
         else holder.tvName.text = comment.name.replaceFirstChar {it.toUpperCase() }
         holder.tvEmail.text = comment.email

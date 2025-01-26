@@ -36,10 +36,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_messages, R.id.navigation_profile
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         // me ia hjek at label
         supportActionBar?.hide()
+//        setupActionBarWithNavController(navController, appBarConfiguration) - mka qit error
+
 //      nifar problemi palidhje shyqyr u zgjidh
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
