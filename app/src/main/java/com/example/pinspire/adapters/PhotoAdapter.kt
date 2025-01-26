@@ -6,10 +6,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.pinspire.R
 import com.example.pinspire.api.Helper.provideRetrofit
 import com.example.pinspire.api.ServiceApi
@@ -36,8 +39,9 @@ class PhotoAdapter(
         val tvUsername: TextView = itemView.findViewById(R.id.tvUsername)
         val tvDescription: TextView = itemView.findViewById(R.id.tvDescription)
         val imgLike: ImageView = itemView.findViewById(R.id.imgLike)
-        val postDetails: TextView = itemView.findViewById(R.id.post_details)
-        val profilePic : ImageView = itemView.findViewById(R.id.profilePic)
+        val postDetails: Button = itemView.findViewById(R.id.post_details)
+        val profilePic: ImageView = itemView.findViewById(R.id.profilePic)
+        val loader: ProgressBar = itemView.findViewById(R.id.loader)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
@@ -47,54 +51,47 @@ class PhotoAdapter(
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         val photo = photoList[position]
-        var photoId = photo.id;
+        var photoId = photo.id
 
-
-        // pjesa me marr ni user based on post id t klikume
-        // ama mduhet me i ba me rekurzion se api i kish veq 10 usera
-
+        holder.loader.visibility = View.VISIBLE
         holder.tvUsername.text = "Loading..."
-        var response2: Int? = null;
-        var responseErrorBody2: ResponseBody? = null;
 
-        if(photoId > 10) {
-            photoId = photoId % 10;
+        if (photoId > 10) {
+            photoId %= 10
         }
+
         provideRetrofit().getUserById(photoId).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
-                response2 = response.code()
-                responseErrorBody2 = response.errorBody()
                 if (response.isSuccessful) {
+                    holder.loader.visibility = View.GONE
                     val user = response.body()
                     holder.tvUsername.text = user?.name ?: "Unknown User"
                 } else {
                     holder.tvUsername.text = "Error"
-
                 }
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
-                holder.tvUsername.text = "Netvërk probllëm"
-                Log.e("API_ERROR", "Response Code: ${response2}, Error Body: ${responseErrorBody2?.string()}")
-
+                holder.loader.visibility = View.GONE
+                holder.tvUsername.text = "Network Problem"
+                Log.e("API_ERROR", "Error fetching user: ${t.message}")
             }
         })
 
-
-
-//        holder.tvUsername.text = user?.name.toString();
         holder.tvDescription.text = photo.title.replaceFirstChar { it.uppercase() }
 
         val imageUrl = "https://picsum.photos/600/400?random=${photo.id}"
-        val thumbnailUrl = "${photo.thumbnailUrl}"
         Picasso.get()
             .load(imageUrl)
-            .placeholder(R.drawable.ic_loading_img)
             .error(R.drawable.ic_error)
             .into(holder.imgPhoto)
 
+
+        val thumbnailUrl = photo.thumbnailUrl
         Picasso.get()
-            .load(thumbnailUrl).placeholder(R.drawable.ic_loading_img).error(R.drawable.ic_error)
+            .load(thumbnailUrl)
+            .placeholder(R.drawable.ic_loading_img)
+            .error(R.drawable.ic_error)
             .into(holder.profilePic)
 
         if (photo.isLiked) {
@@ -105,7 +102,6 @@ class PhotoAdapter(
 
         holder.imgLike.setOnClickListener {
             photo.isLiked = !photo.isLiked
-
             if (photo.isLiked) {
                 holder.imgLike.setImageResource(R.drawable.ic_liked)
                 Toast.makeText(holder.itemView.context, "Liked!", Toast.LENGTH_SHORT).show()
@@ -114,23 +110,20 @@ class PhotoAdapter(
                 Toast.makeText(holder.itemView.context, "Unliked!", Toast.LENGTH_SHORT).show()
             }
 
-            val sharedPreferences = holder.itemView.context.getSharedPreferences("photo_likes", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putBoolean("isLiked_${photo.id}", photo.isLiked)
-            editor.apply()
+            val sharedPreferences =
+                holder.itemView.context.getSharedPreferences("photo_likes", Context.MODE_PRIVATE)
+            sharedPreferences.edit()
+                .putBoolean("isLiked_${photo.id}", photo.isLiked)
+                .apply()
 
             notifyItemChanged(position)
+
         }
 
-        holder.postDetails.setOnClickListener {
+            holder.postDetails.setOnClickListener {
             onDetailsClick.onDetailsClick(photo)
         }
     }
 
     override fun getItemCount(): Int = photoList.size
-}
-
-//sdi qka o kjo androidi ma generoi
-private operator fun <T> Call<T>.invoke(callback: Callback<T>) {
-
 }

@@ -15,6 +15,7 @@ import com.example.pinspire.adapters.TopicsAdapter
 import com.example.pinspire.api.Helper.provideRetrofit
 import com.example.pinspire.databinding.FragmentHomeBinding
 import com.example.pinspire.models.Photo
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -70,6 +71,7 @@ class HomeFragment : Fragment() {
         val apiService = provideRetrofit()
         // redundant o qikjo kom provu diqka
         photoList.clear()
+        binding.progressCircular.show()
 
         apiService.getPhotos().enqueue(object : Callback<List<Photo>> {
             override fun onResponse(call: Call<List<Photo>>, response: Response<List<Photo>>) {
@@ -87,6 +89,10 @@ class HomeFragment : Fragment() {
 
                     photoList.addAll(photos)
 
+                    val editor = sharedPreferences.edit()
+                    editor.putString("last_fragment", "profile")
+                    editor.apply()
+
                     photoAdapter = PhotoAdapter(photoList, object : PhotoAdapter.OnDetailsClickListener {
                         override fun onDetailsClick(photo: Photo) {
                             val bundle = Bundle()
@@ -95,11 +101,22 @@ class HomeFragment : Fragment() {
                             bundle.putInt("id", photo.id)
                             bundle.putBoolean("isLiked", isLiked)
                             findNavController().navigate(R.id.action_navigation_home_to_postDetailsFragment, bundle)
+
+                            val sharedPreferences2 = requireContext().getSharedPreferences("from_fragment", Context.MODE_PRIVATE)
+                            val editor = sharedPreferences2.edit()
+                            editor.putString("from_fragment", "home")
+                            editor.apply()
                         }
                     })
 
+
                     binding.recyclerView.adapter = photoAdapter
+
+                    binding.progressCircular.hide()
+
                 } else {
+                    binding.progressCircular.hide()
+
                     Toast.makeText(requireContext(), "Failed to load data", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -109,6 +126,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
 
     private fun refreshPhotoList() {
         photoList.clear()

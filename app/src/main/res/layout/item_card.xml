@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
-    >
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@android:color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:gravity="center">
 
+        <!-- Rounded Image -->
         <ImageView
             android:id="@+id/card_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_person_24" />
+            android:src="@drawable/ic_person_24"
+            android:clipToOutline="true" />
 
         <TextView
             android:id="@+id/card_title"
@@ -24,6 +30,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="8dp"
             android:text="Title"
+            android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:background="@android:color/black"

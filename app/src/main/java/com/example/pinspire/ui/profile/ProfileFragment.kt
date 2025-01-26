@@ -1,5 +1,7 @@
 package com.example.pinspire.ui.profile
 
+
+
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var photoAdapter: PhotoAdapter
@@ -34,6 +37,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         fetchPhotos()
@@ -66,6 +70,11 @@ class ProfileFragment : Fragment() {
                             bundle.putInt("id", photo.id)
                             bundle.putBoolean("isLiked", isLiked)
                             findNavController().navigate(R.id.action_navigation_profile_to_postDetailsFragment, bundle)
+
+                            val sharedPreferences = requireContext().getSharedPreferences("from_fragment", Context.MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putString("from_fragment", "profile")
+                            editor.apply()
                         }
                     })
 

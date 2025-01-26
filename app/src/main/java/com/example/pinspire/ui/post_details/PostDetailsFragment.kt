@@ -2,6 +2,7 @@ package com.example.pinspire.ui.post_details
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.example.pinspire.api.ServiceApi
 import com.example.pinspire.databinding.FragmentPostDetailsBinding
 import com.example.pinspire.models.Comment
 import com.example.pinspire.models.Post
+import com.example.pinspire.models.User
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,8 +42,20 @@ class PostDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val backBtn = binding.backBtn
+        binding.loader.visibility = View.VISIBLE;
+        binding.loader1.visibility = View.VISIBLE;
+
         backBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_postDetailsFragment_to_navigation_home)
+            val sharedPreferences = requireContext().getSharedPreferences("from_fragment", Context.MODE_PRIVATE)
+            val fromWhatFragment = sharedPreferences.getString("from_fragment", null)
+            Log.e("WHAAAAAAAAAAAAAAAAAAAAAAAAAAAATISIT", "BROOOOOOOOOOOOOOOOOOOOOOOOOO : ${fromWhatFragment} ", )
+            Log.e("Error___::", "Response Code: ${fromWhatFragment}}")
+
+            if (fromWhatFragment == "profile") {
+                findNavController().navigate(R.id.action_postDetailsFragment_to_navigation_profile)
+            } else {
+                findNavController().navigate(R.id.action_postDetailsFragment_to_navigation_home)
+            }
         }
 
         commentAdapter = CommentAdapter(commentList)
@@ -85,6 +99,26 @@ class PostDetailsFragment : Fragment() {
         getPostDetails(postId)
         getCommentsByPostId(postId)
 
+        provideRetrofit().getUserById(postId).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                if (response.isSuccessful) {
+                    binding.loader1.visibility = View.GONE;
+                    val user = response.body()
+                    if (user != null) {
+                        binding.postedBy.text = user.name
+                    }
+                } else {
+                    binding.postedBy.text = "Error";
+                }
+            }
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                binding.loader1.visibility = View.GONE;
+
+                binding.postedBy.text = "Error";
+                Log.e("API_ERROR", "Error fetching user: ${t.message}")
+            }
+        })
+
 
     }
 
@@ -93,13 +127,13 @@ class PostDetailsFragment : Fragment() {
             override fun onResponse(call: Call<Post>, response: Response<Post>) {
                 if (response.isSuccessful && response.body() != null) {
                     val post = response.body()!!
+                    binding.loader1.visibility = View.GONE;
 
                     if (post.title.length > 20) {
                         binding.tvTitle.text = "Title : " + post.title.substring(0, 20).replaceFirstChar { it.toUpperCase() } + "..."
                     } else binding.tvTitle.text = "Title : " + post.title.replaceFirstChar { it.toUpperCase() }
 
                     binding.tvDescription.text = "Description: \n" + post.body.replaceFirstChar { it.toUpperCase() }
-                    binding.postedBy.text = "User ${post.userId}"
 
                     val imageUrl = "https://picsum.photos/600/400?random=$postId"
                     Picasso.get()
@@ -109,12 +143,16 @@ class PostDetailsFragment : Fragment() {
                         .into(binding.imgPhoto)
 
                 } else {
+                    binding.loader1.visibility = View.GONE;
+
                     Toast.makeText(requireContext(), "Failed to load post details", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<Post>, t: Throwable) {
                 Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                binding.loader1.visibility = View.GONE;
+
             }
         })
     }
@@ -123,6 +161,8 @@ class PostDetailsFragment : Fragment() {
         apiService.getCommentsByPostId(postId).enqueue(object : Callback<List<Comment>> {
             override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
                 if (response.isSuccessful && response.body() != null) {
+                    binding.loader.visibility = View.GONE;
+
                     commentList.clear()
                     commentList.addAll(response.body()!!)
                     commentAdapter.notifyDataSetChanged()
@@ -132,6 +172,8 @@ class PostDetailsFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
+                binding.loader.visibility = View.GONE;
+
                 Toast.makeText(requireContext(), "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })

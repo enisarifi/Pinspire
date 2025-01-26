@@ -4,19 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/light_grey">
 
     <!-- Search Bar -->
     <LinearLayout
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/search_bar_bg"
+        android:background="@drawable/rounded_bg"
         android:orientation="horizontal"
-        android:backgroundTint="@color/grey"
-        android:padding="8dp"
-        android:elevation="4dp"
+        android:padding="12dp"
         android:layout_marginBottom="16dp"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -26,7 +26,7 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_search_24"
             android:contentDescription="Search Icon"
-            app:tint="@color/black" />
+            app:tint="@color/dark_grey" />
 
         <EditText
             android:layout_width="0dp"
@@ -36,15 +36,17 @@
             android:background="@android:color/transparent"
             android:paddingStart="8dp"
             android:padding="10dp"
-            android:layout_marginTop="-10dp"
-            android:inputType="text" />
+            android:textColor="@color/black"
+            android:textSize="16sp"
+
+           />
 
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/baseline_camera_24"
-            android:contentDescription="Camera Icon"
-            app:tint="@color/black" />
+            android:contentDescription="Open Camera"
+            app:tint="@color/dark_grey" />
     </LinearLayout>
 
     <!-- Ideas for You Section -->
@@ -56,9 +58,10 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="18sp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/search_bar"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="8dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ideas_for_you_recycler"
@@ -66,6 +69,7 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:paddingBottom="16dp"
+        android:layout_marginTop="30dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         app:layout_constraintTop_toBottomOf="@id/ideas_for_you_title"
@@ -81,9 +85,9 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="18sp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintTop_toBottomOf="@id/ideas_for_you_recycler"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="8dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/popular_on_pinterest_recycler"
@@ -93,6 +97,7 @@
         android:paddingBottom="16dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
+        android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/popular_on_pinterest_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
