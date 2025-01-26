@@ -63,6 +63,11 @@ class ProfileFragment : Fragment() {
                     photoList.clear()
                     photoList.addAll(likedPhotos)
 
+                    if(likedPhotos.isEmpty()) {
+                        binding.noPosts.visibility = View.VISIBLE
+                    }
+                    else binding.noPosts.visibility = View.GONE
+
                     photoAdapter = PhotoAdapter(photoList, object : PhotoAdapter.OnDetailsClickListener {
                         override fun onDetailsClick(photo: Photo) {
                             val bundle = Bundle()

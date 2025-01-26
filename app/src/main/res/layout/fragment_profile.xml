@@ -102,6 +102,18 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+    <TextView
+        android:id="@+id/no_posts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/info_container"
+        android:layout_marginTop="100dp"
+        android:textSize="18sp"
+        android:textColor="@color/grey"
+        android:text="No liked posts \n(I guess you haven't seen any)"
+        android:visibility="gone"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
