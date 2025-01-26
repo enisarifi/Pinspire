@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Typography for Material 3 -->
+<!--    <style name="Typography.Pinspire" parent="TextAppearance.Material3">-->
+<!--        <item name="headlineLarge">@font/roboto_bold</item>-->
+<!--        <item name="headlineMedium">@font/roboto_medium</item>-->
+<!--        <item name="bodyMedium">@font/roboto_regular</item>-->
+<!--        <item name="labelSmall">@font/roboto_light</item>-->
+<!--    </style>-->
+</resources>

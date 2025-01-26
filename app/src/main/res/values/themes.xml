@@ -1,0 +1,42 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Pinspire" parent="Theme.Material3.DayNight">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#75AC75</item>
+        <item name="colorPrimaryContainer">#5D8A5D</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">#03DAC5</item>
+        <item name="colorSecondaryContainer">#79AC79</item>
+        <item name="colorOnSecondary">#000000</item>
+
+        <!-- Tertiary brand color (optional, can be customized further). -->
+        <item name="colorTertiary">#FFBB86FC</item>
+        <item name="colorTertiaryContainer">#3700B3</item>
+        <item name="colorOnTertiary">#FFFFFF</item>
+
+        <!-- Surface and background colors. -->
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#000000</item>
+<!--        ::::::::::::::::::::::::::::::::::::::::::::::::: HEJ BOJE UNKOMENT QITAAAA ::::::::::::::::::::::::::::-->
+<!--        <item name="colorBackground">#F2F2F2</item>-->
+        <item name="colorOnBackground">#000000</item>
+
+        <!-- Status bar color (optional). -->
+        <item name="android:statusBarColor">?attr/colorPrimaryContainer</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+
+        <!--        do sene qaty-->
+<!--        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Pinspire.Small</item>-->
+<!--        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Pinspire.Medium</item>-->
+<!--        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Pinspire.Large</item>-->
+
+        <!--        typografia-->
+<!--        <item name="textAppearanceHeadlineLarge">@style/Typography.Pinspire</item>-->
+<!--        <item name="textAppearanceBodyMedium">@style/Typography.Pinspire</item>-->
+
+    </style>
+</resources>

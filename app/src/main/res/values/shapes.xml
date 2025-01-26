@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+<!--     Shape appearance for Material 3 -->
+<!--    <style name="ShapeAppearance.Pinspire.Small" parent="ShapeAppearance.Material3.Small">-->
+<!--        <item name="cornerFamily">rounded</item>-->
+<!--        <item name="cornerSize">8dp</item>-->
+<!--    </style>-->
+
+<!--    <style name="ShapeAppearance.Pinspire.Medium" parent="ShapeAppearance.Material3.Medium">-->
+<!--        <item name="cornerFamily">rounded</item>-->
+<!--        <item name="cornerSize">16dp</item>-->
+<!--    </style>-->
+
+<!--    <style name="ShapeAppearance.Pinspire.Large" parent="ShapeAppearance.Material3.Large">-->
+<!--        <item name="cornerFamily">rounded</item>-->
+<!--        <item name="cornerSize">24dp</item>-->
+<!--    </style>-->
+</resources>
