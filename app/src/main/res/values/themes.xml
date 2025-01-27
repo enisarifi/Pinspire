@@ -1,18 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Pinspire" parent="Theme.Material3.DayNight">
+    <style name="Theme.Pinspire" parent="Theme.Material3.DayNight"> // Cannot recognize
         <!-- Primary brand color. -->
         <item name="colorPrimary">#75AC75</item>
-        <item name="colorPrimaryContainer">#5D8A5D</item>
+        <item name="colorPrimaryContainer">#5D8A5D</item> //this one too
         <item name="colorOnPrimary">#FFFFFF</item>
 
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#03DAC5</item>
-        <item name="colorSecondaryContainer">#79AC79</item>
+        <item name="colorSecondaryContainer">#79AC79</item> // this one too
         <item name="colorOnSecondary">#000000</item>
 
         <!-- Tertiary brand color (optional, can be customized further). -->
+        //all of these
         <item name="colorTertiary">#FFBB86FC</item>
         <item name="colorTertiaryContainer">#3700B3</item>
         <item name="colorOnTertiary">#FFFFFF</item>
