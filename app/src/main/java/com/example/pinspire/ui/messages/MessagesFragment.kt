@@ -17,21 +17,14 @@ class MessagesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMessagesBinding.inflate(inflater, container, false)
 
-        setupRecyclerView()
+        binding = FragmentMessagesBinding.inflate(layoutInflater)
         setupSendButton()
 
         return binding.root
     }
 
-    private fun setupRecyclerView() {
-        messagesAdapter = MessagesAdapter(messagesList)
-        binding.recyclerViewMessages.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = messagesAdapter
-        }
-    }
+
 
     private fun setupSendButton() {
         binding.sendButton.setOnClickListener {
